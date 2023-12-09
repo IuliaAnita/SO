@@ -17,7 +17,12 @@ while IFS= read -r line || [ -n "$line" ]; do
     # Verifica daca linia incepe cu o litera mare
     if [[ $line =~ ^[A-Z] ]]; then
         # Verifica daca linia respecta conditiile date
-        if [[ $line =~ ^[A-Za-z0-9,[:space:]\.\!\?]+[^\,]$ && ! $line =~ ,[[:space:]]+și ]]; then
+        if [[ $line =~ ^[A-Z] ]] &&                 
+	   [[ $line =~ [a-zA-Z0-9\ \!\?\.]+$ ]] &&       
+	   [[ $line =~ (\.|\!|\?)$ ]] &&                  
+	   [[ ! $line =~ ,\ și ]] &&
+	   [[ $line == *"$character"* ]] ;
+	then
             # Incrementare contor
             ((counter++))
         fi
@@ -25,7 +30,7 @@ while IFS= read -r line || [ -n "$line" ]; do
 done
 
 # Afiseaza rezultatul final
-echo "Numarul de propozitii ce il contine pe $1 este: $counter"
+echo "Numarul de propozitii corecte ce il contine pe $1 este: $counter"
 
 
 
